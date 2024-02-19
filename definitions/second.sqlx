@@ -1,9 +1,10 @@
 config {
     type: 'table',
-    description: "target table"
+    description: "target table",
+    name: 'second'
 }
 
 SELECT
-  SUM(number)
+  SUM(number) as total
 FROM
-  ${ref("first")} AS Total
+  ${ref("first")}
