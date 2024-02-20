@@ -12,3 +12,5 @@ SELECT
 UNION ALL
 SELECT
   3 AS number
+  union ALL
+  select 5 as number
