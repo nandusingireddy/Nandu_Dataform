@@ -7,9 +7,4 @@ config {
 SELECT
   SUM(number) AS total
 FROM
-  ${ref("first")} AS Sum_Table
-
-SELECT
-  *
-FROM
-  Sum_Table
+  ${ref("first")} 
