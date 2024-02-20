@@ -8,7 +8,7 @@ SELECT
   SUM(number) AS total
 FROM
   ${ref("first")} AS Sum_Table
-UNION ALL
+
 SELECT
   *
 FROM
