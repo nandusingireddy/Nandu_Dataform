@@ -1,0 +1,19 @@
+config {
+  database: 'secure-potion-409606',
+  schema: "Results",
+  type: "view",
+  name: "results_join"
+}
+
+SELECT
+  r1.id AS id_1,
+  r1.name AS name_1,
+  r1.marks AS marks,
+  r2.id AS id_2,
+  r2.name AS name_2
+FROM
+  `secure-potion-409606.NanduSingireddy.results_1` AS r1
+JOIN
+  `secure-potion-409606.NanduSingireddy.results_2` AS r2
+ON
+  r1.marks = r2.marks
