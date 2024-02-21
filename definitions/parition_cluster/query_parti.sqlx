@@ -1,0 +1,13 @@
+config {
+    name: 'query_parti',
+    type: 'table',
+    database: 'secure-potion-409606',
+    schema: "Results"
+}
+
+SELECT
+  *
+FROM
+  ${ref("Partition")}
+WHERE
+  aggregation_level = 1

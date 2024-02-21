@@ -1,8 +1,8 @@
 config {
-  database: 'secure-potion-409606',
-  schema: "Results",
-  type: "view",
-  name: "results_join"
+    database: 'secure-potion-409606',
+    schema: "Results",
+    type: "view",
+    name: "results_join"
 }
 
 SELECT

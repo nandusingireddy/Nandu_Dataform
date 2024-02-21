@@ -1,0 +1,13 @@
+config {
+    database: 'secure-potion-409606',
+    schema: "Results",
+    type: "incremental",
+    dependencies:['colors'],
+    name: "colors_increment"
+}
+
+SELECT
+  *
+FROM
+  ${ref("colors")} 
+  ${when(incremental(), `WHERE timestamp > (SELECT MAX(timestamp) FROM ${self()})`)}

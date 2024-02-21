@@ -1,0 +1,15 @@
+config {
+    name: 'Partition',
+    type: 'table',
+    database: 'secure-potion-409606',
+    schema: "Results",
+    bigquery: {
+        partitionBy: "range_bucket(aggregation_level,generate_array(0,3,1))",
+        requirePartitionFilter: true
+    }
+}
+
+SELECT
+  *
+FROM
+  `bigquery-public-data.covid19_open_data.covid19_open_data`

@@ -1,0 +1,13 @@
+config {
+    type: "view",
+    name: "2013_health"
+}
+
+SELECT
+  city,
+  state,
+  sum(total_hha_charge_amount_non_lupa) as total_hha_charge_amount_non_lupa_by_city_state_2013,
+  avg(total_hha_medicare_payment_amount_non_lupa) as total_hha_medicare_payment_amount_non_lupa_by_city_state_2013
+FROM
+  `bigquery-public-data.cms_medicare.home_health_agencies_2013`
+group by city,state

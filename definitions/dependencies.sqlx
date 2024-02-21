@@ -1,0 +1,22 @@
+config {
+    database: 'secure-potion-409606',
+    schema: "Results",
+    type: "table",
+    name: "2013-2014_health",
+    dependencies: ["2013_health", "2014_health"]
+}
+
+SELECT
+  h1.city AS city,
+  h1.state AS state,
+  total_hha_charge_amount_non_lupa_by_city_state_2013,
+  total_hha_medicare_payment_amount_non_lupa_by_city_state_2013,
+  total_hha_charge_amount_non_lupa_by_city_state_2014,
+  total_hha_medicare_payment_amount_non_lupa_by_city_state_2014,
+FROM
+  ${ref("2013_health")} AS h1
+JOIN
+  ${ref("2014_health")} AS h2
+ON
+  h1.city = h2.city
+  AND h1.state = h2.state

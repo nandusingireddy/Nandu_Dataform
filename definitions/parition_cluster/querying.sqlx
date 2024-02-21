@@ -1,0 +1,13 @@
+config {
+    name: 'query',
+    type: 'table',
+    database: 'secure-potion-409606',
+    schema: "Results"
+}
+
+SELECT
+  *
+FROM
+  ${ref("Without")}
+WHERE
+  aggregation_level = 1
