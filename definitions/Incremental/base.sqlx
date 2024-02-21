@@ -1,9 +1,0 @@
-config {
-    database: 'secure-potion-409606',
-    schema: "Results",
-    type: "table",
-    name: "colors"
-}
-
-select *, current_timestamp() as timestamp
-from `secure-potion-409606.NanduSingireddy.colors`
