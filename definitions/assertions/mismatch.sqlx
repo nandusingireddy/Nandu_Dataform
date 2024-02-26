@@ -1,5 +1,6 @@
 config {
-   type: 'assertion'
+   type: 'assertion',
+   dependencies : ["datamismatch"]
 }
 
 select * from `secure-potion-409606.NanduSingireddy.data_mismatch_results`

@@ -1,0 +1,11 @@
+config {
+    type: "assertion",
+    dependencies: ["workflow_query"]
+}
+
+SELECT
+  *
+FROM
+  `secure-potion-409606.Results.workflow_query`
+WHERE
+  experience >10

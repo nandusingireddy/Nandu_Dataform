@@ -1,17 +1,28 @@
 config {
-    type : "operations"
+    type : "operations",
+    database: 'secure-potion-409606',
+    schema: "NanduSingireddy",
+    name : 'datamismatch'
 }
 
-CREATE OR REPLACE PROCEDURE `NanduSingireddy.datamismatch`()
+CREATE OR REPLACE PROCEDURE `NanduSingireddy.datamismatch`(table_1 STRING, table_2 STRING)
 BEGIN
   DECLARE sql_string STRING;
   DECLARE where_condition STRING;
   
+  -- Finding common columns between the two tables
+  CREATE TEMP TABLE common_columns AS
+    SELECT c1.column_name AS common_column
+    FROM `NanduSingireddy.INFORMATION_SCHEMA.COLUMNS` c1
+    JOIN `NanduSingireddy.INFORMATION_SCHEMA.COLUMNS` c2
+    ON c1.column_name = c2.column_name
+    WHERE c1.table_name = table_1
+    AND c2.table_name = table_2;
+
   -- Constructing the SQL string for column comparison
   SET sql_string = (
-    SELECT STRING_AGG('i1.' || column_name || ' <> i2.' || column_name, ' OR ')
-    FROM `NanduSingireddy.INFORMATION_SCHEMA.COLUMNS`
-    WHERE table_name = 'data_250_1'
+    SELECT STRING_AGG('i1.' || common_column || ' <> i2.' || common_column, ' OR ')
+    FROM common_columns
   );
 
   -- Constructing the WHERE condition
@@ -20,13 +31,17 @@ BEGIN
   -- Constructing the final SQL query
   SET sql_string = 
     CONCAT('CREATE OR REPLACE TABLE `NanduSingireddy.data_mismatch_results` AS ',
-           'SELECT i1.id FROM `secure-potion-409606.NanduSingireddy.data_250_1` i1 ',
-           'JOIN `secure-potion-409606.NanduSingireddy.data_250_2` i2 ',
+           'SELECT i1.id FROM `secure-potion-409606.NanduSingireddy.', table_1, '` i1 ',
+           'JOIN `secure-potion-409606.NanduSingireddy.', table_2, '` i2 ',
            'ON i1.id = i2.id ',
            where_condition);
 
   -- Executing the dynamic SQL query to create the table
   EXECUTE IMMEDIATE sql_string;
+  
+  -- Drop temporary table
+  DROP TABLE common_columns;
 END;
 
-CALL `NanduSingireddy.datamismatch`()
+CALL `NanduSingireddy.datamismatch`('info_1', 'info_2');
+

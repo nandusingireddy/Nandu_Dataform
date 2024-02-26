@@ -1,0 +1,19 @@
+config {
+    database: 'secure-potion-409606',
+    schema: "Results",
+    type: "table",
+    name: "workflow_join"
+}
+
+SELECT
+  info.*,
+  exp.qualification,
+  exp.courses,
+  exp.experience,
+  exp.previous_company
+FROM
+  `secure-potion-409606.NanduSingireddy.info_1` AS info
+JOIN
+  `secure-potion-409606.NanduSingireddy.experience` AS exp
+ON
+  info.id = exp.id
