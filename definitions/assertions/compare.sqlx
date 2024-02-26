@@ -1,0 +1,19 @@
+config {
+    type: 'assertion'
+}
+
+SELECT
+  i1.*
+FROM
+  `secure-potion-409606.NanduSingireddy.info_1` i1
+JOIN
+  `secure-potion-409606.NanduSingireddy.info_2` i2
+ON
+  i1.id=i2.id
+WHERE
+  i1.name <> i2.name or
+  i1.age <> i2.age or
+  i1.city <> i2.city or
+  i1.country <> i2.country or
+  i1.department <> i2.department or
+  i1.salary <> i2.salary

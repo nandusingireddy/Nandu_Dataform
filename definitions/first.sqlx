@@ -1,7 +1,8 @@
 config {
     type: 'table',
     description: "Source table",
-    name: 'first'
+    name: 'first',
+    disabled: true
 }
 
 SELECT
@@ -17,4 +18,4 @@ SELECT
   5 AS number
 UNION ALL
 SELECT
-  6 AS number
+  "nandu" AS number

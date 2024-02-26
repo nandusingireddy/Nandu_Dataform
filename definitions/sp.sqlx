@@ -1,0 +1,47 @@
+config {
+    type: 'operations',
+    description: 'Procedure to calculate statistics on user data by country.'
+}
+
+CREATE OR REPLACE PROCEDURE
+  `Results.nandu`()
+BEGIN
+SELECT
+  country,
+  COUNT(DISTINCT id) AS total_customers,
+  AVG(CAST(salary AS FLOAT64)) AS avg_salary,
+  MAX(CAST(salary AS FLOAT64)) AS max_salary,
+  MIN(CAST(salary AS FLOAT64)) AS min_salary,
+  COUNT(DISTINCT
+    CASE
+      WHEN gender = 'Male' THEN id
+  END
+    ) AS male_customers,
+  COUNT(DISTINCT
+    CASE
+      WHEN gender = 'Female' THEN id
+  END
+    ) AS female_customers,
+  AVG(CASE
+      WHEN gender = 'Male' THEN CAST(salary AS FLOAT64)
+  END
+    ) AS avg_male_salary,
+  AVG(CASE
+      WHEN gender = 'Female' THEN CAST(salary AS FLOAT64)
+  END
+    ) AS avg_female_salary
+FROM
+  `secure-potion-409606.NanduSingireddy.Users`
+WHERE
+  salary <> 'null'
+GROUP BY
+  country
+HAVING
+  total_customers > 45
+  AND avg_salary > 50000
+ORDER BY
+  avg_salary DESC;
+END
+  ;
+CALL
+  `Results.nandu`()

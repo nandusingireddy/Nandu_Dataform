@@ -1,0 +1,30 @@
+config {
+    database: 'secure-potion-409606',
+    schema: "Results",
+    type: "table",
+    name: 'assert',
+    assertions: {
+        uniqueKey: ["id"],
+        nonNull: ["c2"],
+        rowConditions: [
+          'id > 2'
+        ]
+    }    
+}
+
+SELECT
+  *
+FROM
+  `secure-potion-409606.NanduSingireddy.colours`
+
+pre_operations {
+  INSERT INTO
+    `secure-potion-409606.NanduSingireddy.colours` (id,
+      c1,
+      c2,
+      c3)
+  VALUES
+    (9,'azpd','byqe','cxr'),
+    (10,'asd',null,'ert');
+}
+

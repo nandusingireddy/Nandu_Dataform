@@ -2,9 +2,10 @@ config {
     type: 'table',
     description: "target table",
     name: 'second',
+    dependencies: ['first']
 }
 
 SELECT
   SUM(number) AS total
 FROM
-  ${ref("first")} 
+  ${ref("first")}

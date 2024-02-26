@@ -1,0 +1,32 @@
+config {
+    type : "operations"
+}
+
+CREATE OR REPLACE PROCEDURE `NanduSingireddy.datamismatch`()
+BEGIN
+  DECLARE sql_string STRING;
+  DECLARE where_condition STRING;
+  
+  -- Constructing the SQL string for column comparison
+  SET sql_string = (
+    SELECT STRING_AGG('i1.' || column_name || ' <> i2.' || column_name, ' OR ')
+    FROM `NanduSingireddy.INFORMATION_SCHEMA.COLUMNS`
+    WHERE table_name = 'data_250_1'
+  );
+
+  -- Constructing the WHERE condition
+  SET where_condition = CONCAT('WHERE ', sql_string);
+
+  -- Constructing the final SQL query
+  SET sql_string = 
+    CONCAT('CREATE OR REPLACE TABLE `NanduSingireddy.data_mismatch_results` AS ',
+           'SELECT i1.id FROM `secure-potion-409606.NanduSingireddy.data_250_1` i1 ',
+           'JOIN `secure-potion-409606.NanduSingireddy.data_250_2` i2 ',
+           'ON i1.id = i2.id ',
+           where_condition);
+
+  -- Executing the dynamic SQL query to create the table
+  EXECUTE IMMEDIATE sql_string;
+END;
+
+CALL `NanduSingireddy.datamismatch`()

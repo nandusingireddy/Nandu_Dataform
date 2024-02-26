@@ -1,0 +1,64 @@
+config {
+    type : "operations"
+}
+
+CREATE OR REPLACE PROCEDURE `secure-potion-409606.NanduSingireddy.ConversionToBigQueryDataTypes`()
+BEGIN
+  -- Declarations
+  DECLARE sql_statement STRING;
+  DECLARE table_statement STRING;
+
+  -- Creating a view to map SQL Server datatypes to BigQuery datatypes
+  CREATE OR REPLACE TEMPORARY TABLE bigQuery_datatypes AS (
+    SELECT
+      *,
+      CASE
+        WHEN datatype IN ('int','bigint','smallint','tinyint') THEN 'INT64'
+        WHEN datatype IN ('decimal','numeric') THEN 'NUMERIC'
+        WHEN datatype IN ('float','real') THEN 'FLOAT64'
+        WHEN datatype IN ('varchar', 'nvarchar', 'char','nchar','text','ntext') THEN 'STRING'
+        WHEN datatype = 'date' THEN 'DATE'
+        WHEN datatype = 'time' THEN 'TIME'
+        WHEN datatype = 'datetime' THEN 'TIMESTAMP'
+      END AS bq_datatype
+    FROM
+      `secure-potion-409606.NanduSingireddy.SQLServer`
+  );
+
+  -- Loop through each distinct table name
+  FOR TABLE IN (
+    SELECT DISTINCT table_name FROM bigQuery_datatypes
+  ) DO
+    -- Loop through each row in the view for the current table
+    FOR ROW IN (
+      SELECT
+        column_name,
+        bq_datatype,
+        is_nullable
+      FROM
+        bigQuery_datatypes
+      WHERE
+        table_name = TABLE.table_name
+    ) DO
+      -- Concatenate column names and BigQuery datatypes
+      IF ROW.is_nullable = 'NO' THEN
+        SET table_statement = CONCAT(COALESCE(table_statement, ''), ROW.column_name, ' ', ROW.bq_datatype, ' NOT NULL', ',');
+      ELSE
+        SET table_statement = CONCAT(COALESCE(table_statement, ''), ROW.column_name, ' ', ROW.bq_datatype, ',');
+      END IF;
+    END FOR;
+
+    -- Create the SQL statement to create the BigQuery table
+    SET sql_statement = CONCAT('CREATE TABLE IF NOT EXISTS `secure-potion-409606.NanduSingireddy.', TABLE.table_name, '`(', table_statement, ');');
+
+    -- Execute the SQL statement
+    EXECUTE IMMEDIATE sql_statement;
+
+    -- Reset variables for the next iteration
+    SET table_statement = '';
+    SET sql_statement = '';
+
+  END FOR;
+END;
+
+CALL `secure-potion-409606.NanduSingireddy.ConversionToBigQueryDataTypes`()
