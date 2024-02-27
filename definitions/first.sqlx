@@ -16,6 +16,3 @@ SELECT
 UNION ALL
 SELECT
   5 AS number
-UNION ALL
-SELECT
-  "nandu" AS number

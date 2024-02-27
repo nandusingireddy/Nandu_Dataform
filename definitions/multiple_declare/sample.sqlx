@@ -1,0 +1,11 @@
+config {
+    type: 'table',
+    database: "secure-potion-409606",
+    schema: "Results",
+    name: 'ext_info_1'
+}
+
+SELECT
+  *
+FROM
+  ${ref('info_1')}

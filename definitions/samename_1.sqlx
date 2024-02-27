@@ -1,9 +1,0 @@
-config {
-    database: 'secure-potion-409606',
-    schema: "Results",
-    type: "table",
-    name: "samename"
-}
-
-Select * FROM
-  `secure-potion-409606.NanduSingireddy.experience.`

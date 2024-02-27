@@ -1,0 +1,8 @@
+config {
+  type: 'table',
+  database: "secure-potion-409606",
+    schema: "Results",
+  name : 'ext_SQLServer'
+}
+
+select * from ${ref('SQLServer')}
