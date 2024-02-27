@@ -3,7 +3,8 @@ config {
     schema: "Results",
     type: "table",
     name: "workflow_query",
-    dependencies: ['workflow_join']
+    dependencies: ['workflow_join'],
+    tags : ['airflow']
 }
 
 SELECT 
@@ -18,7 +19,7 @@ SELECT
     experience,
     previous_company
 FROM 
-    `secure-potion-409606.Results.workflow_join`
+    ${ref('workflow_join')}
 WHERE 
     country IN ('USA', 'Canada', 'UK','China')
     AND salary > 45000
