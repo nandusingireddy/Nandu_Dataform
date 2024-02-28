@@ -21,3 +21,4 @@ set tblvalue = concat("insert into ${ref("outputtbl")} ",sqlquery);
 EXECUTE IMMEDIATE tblvalue;
 
 END
+
