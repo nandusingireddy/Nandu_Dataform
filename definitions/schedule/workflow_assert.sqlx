@@ -1,6 +1,5 @@
 config {
     type: "assertion",
-    dependencies: ["workflow_query"],
     tags : ['airflow']
 }
 

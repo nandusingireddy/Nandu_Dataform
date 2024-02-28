@@ -3,7 +3,6 @@ config {
     schema: "Results",
     type: "table",
     name: "workflow_query",
-    dependencies: ['workflow_join'],
     tags : ['airflow']
 }
 
