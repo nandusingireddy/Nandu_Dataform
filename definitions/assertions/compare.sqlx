@@ -15,5 +15,4 @@ WHERE
   i1.age <> i2.age or
   i1.city <> i2.city or
   i1.country <> i2.country or
-  i1.department <> i2.department or
-  i1.salary <> i2.salary
+  i1.department <> i2.department

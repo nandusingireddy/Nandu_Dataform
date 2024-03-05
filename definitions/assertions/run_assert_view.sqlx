@@ -1,0 +1,8 @@
+config {
+    database: 'secure-potion-409606',
+    schema: "Results",
+    type : "table",
+    name : "failure_records"
+}
+
+select * from ${ref("mismatch_assert")}

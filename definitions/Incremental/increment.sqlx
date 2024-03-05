@@ -2,9 +2,7 @@ config {
     database: 'secure-potion-409606',
     schema: "Results",
     type: "incremental",
-    name: "colors_increment",
-    uniqueKey: ["id"]
-    
+    name: "colors_increment"
 }
 
 SELECT

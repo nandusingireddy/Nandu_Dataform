@@ -1,5 +1,6 @@
 config {
    type: 'assertion',
+   name : 'mismatch_assert',
    dependencies : ["datamismatch"]
 }
 
